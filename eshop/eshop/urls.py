@@ -20,5 +20,5 @@ from info_pages.views import page_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('info/<page_name:str>/', page_view, name="page_view"),
+    path('info/<str:page_name>/', page_view, name="page_view"),
 ]
