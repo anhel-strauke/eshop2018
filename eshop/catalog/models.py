@@ -22,3 +22,7 @@ class Product(models.Model):
 
     def __str__(self):
         return "{n} ({i})".format(n=self.name, i=self.id)
+
+    def readable_price(self):
+        true_price = self.price / 100
+        return true_price
