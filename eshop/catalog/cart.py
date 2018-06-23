@@ -4,9 +4,17 @@ class Cart:
     def __init__(self, request):
         self.session = request.session
 
+    def add_product(self, product):
+        cart_data = self.session.get("cart", {})
+        if product.id in cart_data:
+            q = cart_data[product.id]
+        else:
+            q = 0
+        self.update_product(product, q + 1)
+
     def update_product(self, product, quantity):
-        cart_data = request.session.get("cart", {})
-        #cart_sum = request.session.get("cartsum", 0)
+        cart_data = self.session.get("cart", {})
+        #cart_sum = self.session.get("cartsum", 0)
         if quantity <= 0:
             if product.id in cart_data:
                 del cart_data[product.id]
@@ -24,11 +32,11 @@ class Cart:
             cart_sum += prod.price * quant
 
         self.session["cart"] = cart_data
-        self.session["cartsum"] = cart_sum
+        self.session["cartsum"] = cart_sum / 100
 
     def products(self):
         result = []
-        cart_data = request.session.get("cart", {})
+        cart_data = self.session.get("cart", {})
         for product_id, quantity in cart_data:
             try:
                 prod = Product.objects.get(id=product_id)

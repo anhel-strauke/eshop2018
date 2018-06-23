@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Category, Product
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
+
+from .cart import Cart
 
 # Create your views here.
 def category_view(request, cat_id):
@@ -51,3 +53,12 @@ def main_view(request):
     }
     # 3. Вывод результат
     return render(request, "main.html", context=context)
+
+def buy_view(request, prod_id):
+    cart = Cart(request)
+    try:
+        product = Product.objects.get(id=prod_id)
+    except Product.DoesNotExist:
+        raise Http404
+    cart.add_product(product)
+    return HttpResponseRedirect("/")
