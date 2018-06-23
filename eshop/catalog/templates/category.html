@@ -3,9 +3,9 @@
 {% block left %}
                 <p class="lead">Каталог</p>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Корма для животных</a>
-                    <a href="#" class="list-group-item">Бытовая техника</a>
-                    <a href="#" class="list-group-item">Смартфоны</a>
+                    {% for cat in categories %}
+                    <a href="{% url 'cat_view' cat.id %}" class="list-group-item {% if cat == category %} active{% endif %}">{{ cat.name }}</a>
+                    {% endfor %}
                 </div>
 {% endblock %}
 {% block content %}

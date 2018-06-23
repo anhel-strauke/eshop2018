@@ -9,10 +9,12 @@ def category_view(request, cat_id):
         category = Category.objects.get(id=cat_id)
     except Category.DoesNotExist:
         raise Http404
-    products = Product.objects.filter(category=category).order_by("name")
+    products = Product.objects.filter(category=category).exclude(is_enabled=False).order_by("name")
+    categories = Category.objects.order_by("name")
     # 2. Подготовка контекста
     context = {
         "category": category,
+        "categories": categories,
         "products": products,
     }
     # 3. Вывод результат
