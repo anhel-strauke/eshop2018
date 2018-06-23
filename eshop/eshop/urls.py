@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path
 
 from info_pages.views import page_view
-from catalog.views import category_view
+from catalog.views import category_view, product_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('info/<str:page_name>/', page_view, name="page_view"),
     path('category/<int:cat_id>/', category_view, name="cat_view"),
+    path('item/<int:prod_id>/', product_view, name="prod_view"),
 ]
