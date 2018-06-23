@@ -1,0 +1,16 @@
+Категории товара (Category)
+- Название (name) Char(max_length=200)
+- Описание (short_description) Text ← blank=True
+
+
+Товары (Product)
+- Название (name) Char(max_length=200)
+- Краткое описание (short_description) Char(250) ← blank=True
+- Длинное описание (description) Text ← blank=True
+- Цена (price) Integer
+- Маленькая фотография (small_photo) ImageField ← null=True
+- Большая фотография (big_photo) ImageField ← null=True
+- Доступен ли? (is_enabled) Boolean
+- Особенный ли? (is_featured) Boolean
+- Рекламируемый ли? (is_really_hot) Boolean
+- Категория (category) (ForeignKey на Category)
