@@ -12,12 +12,12 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=False)
     short_description = models.CharField(max_length=200, null=True, default='')
     description = models.TextField(null=True, blank=True, default='')
-    price = models.IntegerField(null=True, default=0)
+    price = models.IntegerField(default=0)
     small_photo = models.ImageField(null=True)
     big_photo = models.ImageField(null=True)
-    is_enabled = models.BooleanField(null=True, default=False)
-    is_featured = models.BooleanField(null=True, default=False)
-    is_really_hot = models.BooleanField(null=True, default=False)
+    is_enabled = models.BooleanField(default=False)
+    is_featured = models.BooleanField(default=False)
+    is_really_hot = models.BooleanField(default=False)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
