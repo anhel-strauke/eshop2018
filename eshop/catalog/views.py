@@ -19,3 +19,7 @@ def category_view(request, cat_id):
     }
     # 3. Вывод результат
     return render(request, "category.html", context=context)
+
+
+def product_view(request, prod_id):
+    pass
