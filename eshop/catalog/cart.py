@@ -42,7 +42,7 @@ class Cart:
                 prod = Product.objects.get(id=product_id)
             except Product.DoesNotExist:
                 continue
-            result.append({"product": product, "quantity": quantity})
+            result.append({"product": product, "quantity": quantity, "subtotal": product.price * quantity})
         return result
 
     def clear(self):
