@@ -7,6 +7,6 @@ def page_view(request, page_name):
     # 1. Попытаться вывести шаблон page_name.html
     # 2. Если его нет, сообщить, что страницы нет
     try:
-        render(request, page_name + ".html")
+        return render(request, page_name + ".html")
     except TemplateDoesNotExist:
         raise Http404
