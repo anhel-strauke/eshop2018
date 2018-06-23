@@ -5,6 +5,9 @@ class Category(models.Model):
     name = models.CharField(max_length=200, null=False)
     description = models.TextField(null=True, blank=True, default='')
 
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=200, null=False)
     short_description = models.CharField(max_length=200, null=True, default='')
@@ -16,3 +19,6 @@ class Product(models.Model):
     is_featured = models.BooleanField(null=True, default=False)
     is_really_hot = models.BooleanField(null=True, default=False)
     category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return "{n} ({i})".format(n=self.name, i=self.id)
