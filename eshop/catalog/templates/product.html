@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}{{product.name}} — Мой Магазин{% endblock %}
+{% block left %}
+                <p class="lead">Каталог</p>
+                <div class="list-group">
+                    {% for cat in categories %}
+                    <a href="{% url 'cat_view' cat.id %}" class="list-group-item {% if product.category == category %} active{% endif %}">{{ cat.name }}</a>
+                    {% endfor %}
+                </div>
+{% endblock %}
+{% block content %}
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{product.big_photo.url}}" alt="Изображение {{product.name}}">
+                    <div class="caption-full">
+                        <h4 class="pull-right">{{product.readable_price|intcomma}} &#8381;</h4>
+                        <h4>{{product.name}}
+                        </h4>
+                        <p>{{product.short_description}}</p>
+                        <div>{{product.description|linebreaks}}</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-8">
+                        <a href="#" class="btn btn-primary btn-block">Положить в корзину</a>
+                    </div>
+                </div>
+{% endblock %}
