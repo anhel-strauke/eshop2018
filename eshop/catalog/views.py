@@ -36,3 +36,18 @@ def product_view(request, prod_id):
     }
     # 3. Вывод результат
     return render(request, "product.html", context=context)
+
+
+def main_view(request):
+    # 1. Получение информации из базы по запросу
+    products = Product.objects.filter(is_featured=True).exclude(is_enabled=False).order_by("name")
+    hot_products = Product.objects.filter(is_really_hot=True).exclude(is_enabled=False).order_by("name")
+    categories = Category.objects.order_by("name")
+    # 2. Подготовка контекста
+    context = {
+        "categories": categories,
+        "products": products,
+        "hot_products": hot_productsts,
+    }
+    # 3. Вывод результат
+    return render(request, "main.html", context=context)
