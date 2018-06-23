@@ -12,7 +12,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=False)
     short_description = models.CharField(max_length=200, null=True, default='')
     description = models.TextField(null=True, blank=True, default='')
-    price = models.IntegerField(default=0)
+    price = models.PositiveIntegerField(default=0)
     small_photo = models.ImageField(null=True)
     big_photo = models.ImageField(null=True)
     is_enabled = models.BooleanField(default=False)
