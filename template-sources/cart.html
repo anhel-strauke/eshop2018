@@ -79,6 +79,7 @@
 
             <div class="col-md-9">
                 <form action="" method="POST">
+                    {% csrf_token %}
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -90,6 +91,27 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            <tr>
+                                <td><a href="item.html">Purina CatChow</a></td>
+                                <td><input class="form-control input-sm" type="number" name="item_12" value="1"></td>
+                                <td><input class="btn btn-default btn-sm" type="submit" value="Сохранить"></td>
+                                <td>2&nbsp;800</td>
+                            </tr>
+
+                            <tr>
+                                <td><a href="item.html">Purina CatChow</a></td>
+                                <td><input class="form-control input-sm" type="number" name="item-1" value="1"></td>
+                                <td><input class="btn btn-default btn-sm" type="submit" name="update_cart" value="Сохранить"></td>
+                                <td>2&nbsp;800</td>
+                            </tr>
+
+                            <tr>
+                                <td><a href="item.html">Purina CatChow</a></td>
+                                <td><input class="form-control input-sm" type="number" name="item-1" value="1"></td>
+                                <td><input class="btn btn-default btn-sm" type="submit" value="Сохранить"></td>
+                                <td>2&nbsp;800</td>
+                            </tr>
 
                             <tr>
                                 <td><a href="item.html">Purina CatChow</a></td>
@@ -111,12 +133,13 @@
                 удалить товар из корзины, введите 0 в поле «Количество» и нажмите «Сохранить».</p>
                 <div class="row">
                     <div class="col-md-4">
-                        <a href="index.html" class="btn btn-block btn-default btn-lg">Вернуться к покупкам</a>
+                        <input type="submit" class="btn btn-block btn-default btn-lg" name="go_back" value="Вернуться к покупкам">
                     </div>
                     <div class="col-md-4 col-md-offset-4">
-                        <a href="checkout.html" class="btn btn-block btn-primary btn-lg">Оформить заказ</a>
+                        <input type="submit" class="btn btn-block btn-primary btn-lg" value="Оформить заказ" name="do_order">
                     </div>
                 </div>
+            </form>
             </div>
 
         </div>
