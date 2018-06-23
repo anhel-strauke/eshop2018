@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Мой Магазин{% endblock %}
+{% block left %}
+                <p class="lead">Каталог</p>
+                <div class="list-group">
+                    {% for cat in categories %}
+                    <a href="{% url 'cat_view' cat.id %}" class="list-group-item">{{ cat.name }}</a>
+                    {% endfor %}
+                </div>
+{% endblock %}
+{% block content %}
+                {% if hot_products %}
+                <div class="row carousel-holder">
+                    <div class="col-md-12">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                {% for p in hot_products %}
+                                <li data-target="#carousel-example-generic" data-slide-to="{{forloop.counter0}}" {% if forloop.first %}class="active"{% endif %}></li>
+                                {% endfor %}
+                            </ol>
+                            <div class="carousel-inner">
+                                {% for product in hot_products %}
+                                <div class="item {% if forloop.first %}active{% endif %}">
+                                    <a href="{% url 'prod_view' product.id %}">
+                                        <img class="slide-image" src="{{ product.big_photo.url }}" alt="Фотография {{product.name}}">
+                                        <div class="carousel-caption">
+                                            <h3>{{product.name}}</h3>
+                                            <p>{{product.short_description}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <a href="{% url 'prod_view' product.id %}"><img width="320" height="150" src="{{product.small_photo.url}}" alt="Изображение {{product.name}}"></a>
+                            <div class="caption">
+                                <h6 class="pull-right">{{product.readable_price|intcomma}} &#8381;</h6>
+                                <h4><a href="{% url 'prod_view' product.id %}">{{product.name}}</a>
+                                </h4>
+                                <p>{{product.short_description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p>Добро пожаловать в наш магазин! Пожалуйста, выберите категорию слева.</p>
+                    {% endfor %}
+                </div>
+{% endblock %}
