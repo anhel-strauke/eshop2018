@@ -13,4 +13,4 @@
 - Доступен ли? (is_enabled) Boolean
 - Особенный ли? (is_featured) Boolean
 - Рекламируемый ли? (is_really_hot) Boolean
-- Категория (category) (ForeignKey на Category)
+- Категория (category) (ForeignKey на Category, null=True, on_delete=models.SET_NULL)
