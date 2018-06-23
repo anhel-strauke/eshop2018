@@ -19,3 +19,19 @@ def category_view(request, cat_id):
     }
     # 3. Вывод результат
     return render(request, "category.html", context=context)
+
+def product_view(request, prod_id):
+    # 1. Получение информации из базы по запросу
+    try:
+        product = Product.objects.get(id=prod_id)
+    except Product.DoesNotExist:
+        raise Http404
+
+    categories = Category.objects.order_by("name")
+    # 2. Подготовка контекста
+    context = {
+        "categories": categories,
+        "product": product,
+    }
+    # 3. Вывод результат
+    return render(request, "product.html", context=context)

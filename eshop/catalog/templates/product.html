@@ -5,7 +5,7 @@
                 <p class="lead">Каталог</p>
                 <div class="list-group">
                     {% for cat in categories %}
-                    <a href="{% url 'cat_view' cat.id %}" class="list-group-item {% if product.category == category %} active{% endif %}">{{ cat.name }}</a>
+                    <a href="{% url 'cat_view' cat.id %}" class="list-group-item {% if product.category == cat %} active{% endif %}">{{ cat.name }}</a>
                     {% endfor %}
                 </div>
 {% endblock %}
