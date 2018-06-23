@@ -47,7 +47,7 @@ def main_view(request):
     context = {
         "categories": categories,
         "products": products,
-        "hot_products": hot_productsts,
+        "hot_products": hot_products,
     }
     # 3. Вывод результат
     return render(request, "main.html", context=context)
