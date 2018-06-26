@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 
 from info_pages.views import page_view
-from catalog.views import category_view, product_view, main_view, buy_view, cart_view
+from catalog.views import category_view, product_view, main_view, buy_view, cart_view, checkout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,5 +26,6 @@ urlpatterns = [
     path('item/<int:prod_id>/', product_view, name="prod_view"),
     path('item/<int:prod_id>/buy/', buy_view, name="buy_view"),
     path("cart/", cart_view, name="cart_view"),
+    path("cart/checkout/", checkout_view, name="checkout_view"),
     path('', main_view, name="main_view"),
 ]

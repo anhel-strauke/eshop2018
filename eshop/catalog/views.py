@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Category, Product
 from django.http import Http404, HttpResponseRedirect
+from django.urls import reverse
 
 from .cart import Cart
 
@@ -61,7 +62,7 @@ def buy_view(request, prod_id):
     except Product.DoesNotExist:
         raise Http404
     cart.add_product(product)
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect(reverse("cart_view"))
 
 
 def cart_view(request):
@@ -95,9 +96,9 @@ def cart_view(request):
                     total += qty * product.price
 
         if "go_back" in request.POST:
-            return HttpResponseRedirect("/")
+            return HttpResponseRedirect(reverse("main_view"))
         elif "do_order" in request.POST:
-            return HttpResponseRedirect("/cart/checkout/")
+            return HttpResponseRedirect(reverse("checkout_view"))
 
     else:
         products = cart.products()
@@ -114,3 +115,7 @@ def cart_view(request):
     display_products.sort(key=lambda p: p["name"])
 
     return render(request, "cart.html", context={"products": display_products, "total": total / 100})
+
+
+def checkout_view(request):
+    pass
