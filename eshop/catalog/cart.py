@@ -48,6 +48,21 @@ class Cart:
         cart_data = self.session.get("cart", {})
         return cart_data.get(str(product_id), 0)
 
+    def total(self):
+        result = 0
+        cart_data = self.session.get("cart", {})
+        for product_id, quantity in cart_data.items():
+            try:
+                prod = Product.objects.get(id=product_id)
+                result += prod.price * quantity
+            except Product.DoesNotExist:
+                continue
+        return result
+
+    def is_empty(self):
+        cart_data = self.session.get("cart", {})
+        return len(cart_data) == 0
+
     def clear(self):
         self.session["cart"] = {}
         self.session["cartsum"] = 0

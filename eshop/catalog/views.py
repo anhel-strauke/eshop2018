@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from .models import Category, Product
 from django.http import Http404, HttpResponseRedirect
 from django.urls import reverse
-
+from hashlib import md5
+from datetime import datetime
+from random import randint
 from .cart import Cart
+from .forms import CheckoutForm
+from .models import Category, Product, Order, OrderedProduct, OrderStatus
 
 
 # Create your views here.
@@ -119,5 +122,49 @@ def cart_view(request):
     return render(request, "cart.html", context={"products": display_products, "total": total / 100})
 
 
+def make_order_code(person_name):
+    source_str = "{pn}{dt}{r}".format(pn=person_name, dt=datetime.now().isoformat(), r=randint(100000, 999999))
+    hash_func = md5()
+    hash_func.update(source_str.encode("utf-8"))
+    return hash_func.hexdigest()
+
 def checkout_view(request):
-    pass
+    cart = Cart(request)
+    if cart.is_empty():
+        return HttpResponseRedirect(reverse("cart_view"))
+    if request.method == "POST":
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            order_code = make_order_code(form.cleaned_data["person_name"])
+            try:
+                order_status = OrderStatus(id=1)
+            except:
+                order_status = None
+            order = Order(
+                code=order_code, 
+                person_name=form.cleaned_data["person_name"],
+                person_email=form.cleaned_data["person_email"],
+                person_phone=form.cleaned_data["person_phone"],
+                person_address=form.cleaned_data["person_address"],
+                notes=form.cleaned_data["notes"],
+                status=order_status)
+            order.save()
+            for prod in cart.products():
+                ordered_product = OrderedProduct(
+                    order=order, 
+                    product=prod["product"], 
+                    quantity=prod["quantity"],
+                    price=prod["product"].price)
+                ordered_product.save()
+            context = {
+                "order_id": order.id,
+                "person_email": form.cleaned_data["person_email"],
+                "order_code": order_code,
+            }
+            cart.clear()
+            return render(request, "checkout_done.html", context=context)
+    else:
+        form = CheckoutForm()
+
+    total = cart.total()
+    return render(request, "checkout.html", context={"form": form, "total": total / 100})

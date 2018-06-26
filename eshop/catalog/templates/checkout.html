@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Оформление заказа — Мой Магазин{% endblock %}
+{% block left %}
+                <p class="lead">Оформление заказа</p>
+{% endblock %}
+{% block content %}
+                <p class="lead">Пожалуйста, заполните все поля. Без этой информации мы не сможем привести вам ваши товары.</p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_person_name">{{ form.person_name.label}}:</label>
+                        {{ form.person_name}}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_person_email">{{ form.person_email.label}}:</label>
+                        {{ form.person_email}}
+                        <p class="help-block">Не волнуйтесь, мы никогда не шлём рекламных объявлений и прочий спам. На этот адрес
+                        вам придёт информация о вашем заказе, чтобы вы её не потеряли.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_person_phone">{{form.person_phone.label}}:</label>
+                        {{form.person_phone}}
+                        <p class="help-block">Этот номер будет использовать наш оператор <strong>только</strong> для срочных
+                        звоноков о вашем заказе. Никаких SMS, никакой рекламы.</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_person_address">{{ form.person_address.label}}:</label>
+                        {{ form.person_address}}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_notes">{{ form.notes.label }}:</label>
+                        {{ form.notes }}
+                        <p class="help-block">Здесь можно написать, например, что вам желательно доставить товар 1 апреля,
+                        или что с 13:00 до 14:30 вас не будет дома, и любые другие уточнения.</p>
+                    </div>
+
+                    <p class="lead">К оплате: {{total|intcomma}} &#8381;.</p>
+
+                    <p>Оплата осуществляется <strong>наличными</strong> нашему курьеру при получении товара. К сожалению,
+                    безналичного расчёта у нас пока что нет.</p>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="{% url 'cart_view' %}" class="btn btn-block btn-default btn-lg">Назад к корзине</a>
+                        </div>
+                        <div class="col-md-4 col-md-offset-4">
+                            <input type="submit" class="btn btn-block btn-primary btn-lg" value="Оформить заказ">
+                        </div>
+                    </div>
+                </form>
+{% endblock %}
