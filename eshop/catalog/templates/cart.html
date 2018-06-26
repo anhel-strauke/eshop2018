@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Корзина — Мой Магазин{% endblock %}
+{% block left %}
+    <p class="lead">Корзина</p>
+{% endblock %}
+{% block content %}
+    {% if products %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="60%">Товар</td>
+                        <th>Количество</td>
+                        <th></td>
+                        <th>Стоимость</td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for prod in products %}
+                    <tr>
+                        <td><a href="{% url 'prod_view' prod.id %}" title="{{ prod.short_description }}">{{ prod.name }}</a></td>
+                        <td><input class="form-control input-sm" type="number" name="item_{{prod.id}}" value="{{prod.quantity}}" min="0"></td>
+                        <td><input class="btn btn-default btn-sm" type="submit" name="update_cart" value="Сохранить"></td>
+                        <td>{{prod.subtotal|intcomma}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3">Итого</th>
+                        <th>{{total|intcomma}} &#8381;</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <p class="help-block">Пожалуйста, не забудьте нажать кнопку «Сохранить», если вы изменили количество товара. Чтобы
+        удалить товар из корзины, введите 0 в поле «Количество» и нажмите «Сохранить».</p>
+        <div class="row">
+            <div class="col-md-4">
+                <input type="submit" class="btn btn-block btn-default btn-lg" name="go_back" value="Вернуться к покупкам">
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+                <input type="submit" class="btn btn-block btn-primary btn-lg" value="Оформить заказ" name="do_order">
+            </div>
+        </div>
+    </form>
+    {% else %}
+    <div class="row">
+        <p>В корзине пока что ничего нет. Чтобы добавить товар в корзину, перейдите на страницу этого товара и нажмите кнопку
+        «Добавить в корзину».</p>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{% url 'main_view' %}" class="btn btn-block btn-default btn-lg">Вернуться к покупкам</a>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
