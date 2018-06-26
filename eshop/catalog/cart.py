@@ -6,27 +6,26 @@ class Cart:
 
     def add_product(self, product):
         cart_data = self.session.get("cart", {})
-        if product.id in cart_data:
-            q = cart_data[product.id]
+        prod_id = str(product.id)
+        if prod_id in cart_data:
+            q = cart_data[prod_id]
         else:
             q = 0
         self.update_product(product, q + 1)
 
     def update_product(self, product, quantity):
         cart_data = self.session.get("cart", {})
-        #cart_sum = self.session.get("cartsum", 0)
+        prod_id = str(product.id)
         if quantity <= 0:
-            if product.id in cart_data:
-                del cart_data[product.id]
-        elif product.id in cart_data:
-            cart_data[product.id] += quantity
+            if prod_id in cart_data:
+                del cart_data[prod_id]
         else:
-            cart_data[product.id] = quantity
+            cart_data[prod_id] = quantity
 
         cart_sum = 0
         for product_id, quant in cart_data.items():
             try:
-                prod = Product.objects.get(id=product_id)
+                prod = Product.objects.get(id=int(product_id))
             except Product.DoesNotExist:
                 continue
             cart_sum += prod.price * quant
@@ -37,13 +36,17 @@ class Cart:
     def products(self):
         result = []
         cart_data = self.session.get("cart", {})
-        for product_id, quantity in cart_data:
+        for product_id, quantity in cart_data.items():
             try:
                 prod = Product.objects.get(id=product_id)
             except Product.DoesNotExist:
                 continue
-            result.append({"product": product, "quantity": quantity, "subtotal": product.price * quantity})
+            result.append({"product": prod, "quantity": quantity, "subtotal": prod.price * quantity})
         return result
+
+    def quantity_by_id(self, producr_id):
+        cart_data = self.session.get("cart", {})
+        return cart_data.get(str(product_id), 0)
 
     def clear(self):
         self.session["cart"] = {}
