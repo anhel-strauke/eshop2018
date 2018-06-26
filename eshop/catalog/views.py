@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from .cart import Cart
 
+
 # Create your views here.
 def category_view(request, cat_id):
     # 1. Получение информации из базы по запросу
@@ -55,6 +56,7 @@ def main_view(request):
     # 3. Вывод результат
     return render(request, "main.html", context=context)
 
+
 def buy_view(request, prod_id):
     cart = Cart(request)
     try:
@@ -92,7 +94,7 @@ def cart_view(request):
                         "short_description": product.short_description,
                         "quantity": qty,
                         "subtotal": qty * product.price / 100,
-                        })
+                    })
                     total += qty * product.price
 
         if "go_back" in request.POST:
@@ -109,7 +111,7 @@ def cart_view(request):
                 "short_description": p["product"].short_description,
                 "quantity": p["quantity"],
                 "subtotal": p["subtotal"] / 100,
-                })
+            })
             total += p["subtotal"]
 
     display_products.sort(key=lambda p: p["name"])
