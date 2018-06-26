@@ -44,7 +44,7 @@ class Cart:
             result.append({"product": prod, "quantity": quantity, "subtotal": prod.price * quantity})
         return result
 
-    def quantity_by_id(self, producr_id):
+    def quantity_by_id(self, product_id):
         cart_data = self.session.get("cart", {})
         return cart_data.get(str(product_id), 0)
 
