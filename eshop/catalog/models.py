@@ -38,9 +38,8 @@ class Order(models.Model):
     comment = models.TextField(blank=True, null=True)
     order_date = models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
-        return "{i} ({d})".format(i=self.id, d=self.order_date)
+        return "{i} ({d}, {pn})".format(i=self.id, d=self.order_date, pn=self.person_name)
 
 
 class OrderStatus(models.Model):
