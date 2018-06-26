@@ -162,6 +162,9 @@ def checkout_view(request):
                 "order_code": order_code,
             }
             cart.clear()
+
+            # TODO: Отправка писем (покупателю и менеджеру)
+
             return render(request, "checkout_done.html", context=context)
     else:
         form = CheckoutForm()
