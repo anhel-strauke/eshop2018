@@ -14,3 +14,26 @@
 - Особенный ли? (is_featured) Boolean
 - Рекламируемый ли? (is_really_hot) Boolean
 - Категория (category) (ForeignKey на Category, null=True, on_delete=models.SET_NULL)
+
+
+OrderStatus
+- Название (name) CharField(max_length=100)
+
+
+Заказ (Order)
+- id
+- Код заказа (code) Char(max_length=30, unique=True)
+- Имя заказчика (person_name) Char(max_length=200)
+- email заказчика (person_email) Email
+- Адрес заказчика (person_address) Text
+- Телефон заказчика (person_phone) Char(max_length=30)
+- Примечания (notes) text(blank=True, null=True)
+- Статус заказа (status) ForeignKey на OrderStatus
+- Комментарий (comment) Text (blank=True, null=True)
+- Дата оформления (order_date) DateTimeField
+
+Заказанный продукт (OrderedProduct)
+- Товар (product) ForeignKey на Product
+- Заказ (order) ForeignKey на Order
+- Количество (quantity) int
+- Цену (price) int
